@@ -6,6 +6,19 @@ const animalForm = document.querySelector("#animal-form")
 toggleSwitch.addEventListener("click", handleToggleDarkMode)
 animalForm.addEventListener("submit", handleAnimalFormSubmit)
 
+const animalList = document.querySelector("#animal-list")
+animalList.addEventListener("click", function(event){
+  if (event.target.matches(".delete-button"))
+  {
+    event.target.closest(".card").remove()
+  } else if (event.target.matches(".donate-button")){
+    const card = event.target.closest(".card")
+    const donationCountSpan = card.querySelector(".donation-count")
+    const newCount = parseInt(donationCountSpan.textContent) + 10
+    donationCountSpan.textContent = newCount
+  }
+})
+
 /********** Event Handlers **********/ 
 function handleToggleDarkMode() {
   document.body.classList.toggle("dark-mode")
@@ -60,6 +73,21 @@ function renderOneAnimal(animalObj) {
 
   // step 3. slap it on the DOM!
   document.querySelector("#animal-list").append(card)
+
+  const deleteBtn = card.querySelector(".delete-button")
+
+  deleteBtn.addEventListener("click",function(){
+    card.remove()
+  })
+
+  const donateBtn = card.querySelector(".donate-button")
+  // donateBtn.addEventListener("click",function(){
+  //   const donationCountSpan = card.querySelector(".donation-count")
+  //   animalObj.donations += 10
+  //   donationCountSpan.textContent = animalObj.donations
+
+
+  // })
 }
 
 function renderAllAnimals(animalData) {
@@ -72,3 +100,4 @@ function initialize() {
 }
 
 initialize()
+
